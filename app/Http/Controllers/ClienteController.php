@@ -15,7 +15,7 @@ class ClienteController extends Controller
     public function index()
     {
         // Buscar os clientes na base de dados (todos)
-        $clientes = Cliente::all();
+        $clientes = Cliente::paginate();
 
         // return view('cliente.index')->with([
         //  'c' => $clientes,

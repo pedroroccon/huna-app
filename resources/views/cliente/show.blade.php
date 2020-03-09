@@ -1,48 +1,30 @@
-@extends('layouts.app')
-
+@extends('hive::layouts.main')
+@section('title', $cliente->nome . ' - Clientes')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Cliente, {{ $cliente->nome }}</h1>
-		<a href="{{ url($cliente->path() . '/telefone') }}" class="btn btn-primary mt-5">Telefones</a>
-		<a href="{{ url($cliente->path() . '/email') }}" class="btn btn-primary mt-5">E-mails</a>
-		<a href="{{ url($cliente->path() . '/endereco') }}" class="btn btn-primary mt-5">Endereços</a>
-    <div class="card card-body shadow-lg my-4">
-      <div class="row">
-        <div class="col-lg-7">
-          <span><strong>Nome completo</strong><br> {{ $cliente->nome }}</span>
-        </div>
-        <div class="col-lg-5">
-          <span><strong>CPF</strong><br> {{ $cliente->cpf }}</span>
-        </div>
-      </div>
-    </div>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/edit']])
 
-    <div class="card card-body shadow-lg my-4">
-      <h4 class="h4">Projetos</h4>
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-show', $cliente)])
 
-			@if($cliente->projetos->count())
+<div class="container-fluid">
 
-				<table class="table">
-					<thead>
-						<tr>
-							<th>Projeto</th>
-						</tr>
-					</thead>
-					<tbody>
-						@foreach($cliente->projetos as $projeto)
-							<tr>
-								<td>{{ $projeto->nome }}</td>
-							</tr>
-						@endforeach
-					</tbody>
-				</table>
+	@component('hive::components.card')
+		<div class="row">
+			<div class="col-lg-8">
+				@component('hive::components.param', ['title' => 'Nome completo'])
+					{{ $cliente->nome }}
+				@endcomponent
+			</div>
+			<div class="col-lg-4">
+				@component('hive::components.param', ['title' => 'CPF'])
+					{{ $cliente->cpf }}
+				@endcomponent
+			</div>
+		</div>
+	@endcomponent
 
-			@else
-				<div class="alert alert-info">Nenhum projeto encontrado.</div>
-			@endif
-
-    </div>
-	</div>
+</div>
 
 @endsection

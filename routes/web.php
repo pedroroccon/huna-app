@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']], function () {
+
+    Route::resource('cliente/{cliente}/endereco', 'ClienteEnderecoController');
+    Route::resource('cliente/{cliente}/email', 'ClienteEmailController');
+    Route::resource('cliente/{cliente}/telefone', 'ClienteTelefoneController');
+    Route::resource('cliente', 'ClienteController');
+
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 
@@ -24,11 +33,6 @@ Route::resource('ambiente', 'AmbienteController');
 Route::resource('etapa/{etapa}/etapa_tipo', 'EtapaTipoController');
 Route::resource('etapa/{etapa}/responsavel', 'ResponsavelController');
 Route::resource('Etapa', 'EtapaController');
-
-Route::resource('cliente/{cliente}/endereco', 'ClienteEnderecoController');
-Route::resource('cliente/{cliente}/email', 'ClienteEmailController');
-Route::resource('cliente/{cliente}/telefone', 'ClienteTelefoneController');
-Route::resource('cliente', 'ClienteController');
 
 Route::resource('projeto/{projeto}/ambiente', 'AmbienteController');
 Route::resource('projeto', 'ProjetoController');
