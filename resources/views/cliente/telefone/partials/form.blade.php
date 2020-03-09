@@ -1,0 +1,11 @@
+<div class="row form-group">
+	<div class="col-lg-12">
+		{!! Form::label('fone', 'Telefone') !!}
+		{!! Form::text('fone', null, ['class' => 'form-control']) !!}
+	</div>
+</div>
+<div class="row form-group">
+	<div class="col-lg-12">
+		{!! Form::submit('Salvar', ['class' => 'btn btn-success']) !!}
+	</div>
+</div>
