@@ -1,12 +1,15 @@
-@extends('layouts.app')
+@extends('hive::layouts.main')
+@section('title', 'Adicionar - Endereço - ' . $cliente->nome . ' - Clientes')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Adicionar Endereço do cliente, {{ $cliente->nome }}</h1>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Adicionar - Endereço - ' . $cliente->nome . ' - Clientes'])
 
-		{!! Form::open(['url' => $cliente->path() . '/endereco', 'method' => 'post']) !!}
-			@include('cliente.endereco.partials.form')
-		{!! Form::close() !!}
-	</div>
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-endereco-create', $cliente)])
+
+{!! Form::open(['url' => $cliente->path() . '/endereco', 'method' => 'post', 'class' => 'hello-form']) !!}
+	@include('cliente.endereco.partials.form', ['submit_button_text' => 'Salvar endereço'])
+{!! Form::close() !!}
 
 @endsection

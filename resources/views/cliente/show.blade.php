@@ -1,12 +1,14 @@
-@extends('hive::layouts.main')
+@extends('cliente.partials.layout')
 @section('title', $cliente->nome . ' - Clientes')
-@section('content')
 
-<!-- Header -->
-@include('hive::components.title', ['page_title' => $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/edit']])
+@section('s-header')
+	<!-- Header -->
+	@include('hive::components.title', ['page_title' => $cliente->nome . ' - Clientes', 'page_button' => ['Editar', $cliente->path() . '/edit']])
+	<!-- Breadcrumbs -->
+	@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-show', $cliente)])
+@endsection
 
-<!-- Breadcrumbs -->
-@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-show', $cliente)])
+@section('s-content')
 
 <div class="container-fluid">
 
@@ -24,7 +26,7 @@
 			</div>
 		</div>
 	@endcomponent
-
+	
 </div>
 
 @endsection

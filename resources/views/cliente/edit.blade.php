@@ -1,14 +1,15 @@
-@extends('layouts.app')
-
+@extends('hive::layouts.main')
+@section('title', 'Editar - ' . $cliente->nome . ' - Clientes')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Editar cliente, {{ $cliente->nome }}</h1>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Editar - ' . $cliente->nome . ' - Clientes'])
 
-		{!! Form::model($cliente, ['url' => $cliente->path(), 'method' => 'patch']) !!}
-			@include('cliente.partials.form')
-		{!! Form::close() !!}
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-edit', $cliente)])
 
-	</div>
+{!! Form::model($cliente, ['url' => $cliente->path(), 'method' => 'patch', 'class' => 'hello-form']) !!}
+	@include('cliente.partials.form', ['submit_button_text' => 'Salvar cliente'])
+{!! Form::close() !!}
 
 @endsection

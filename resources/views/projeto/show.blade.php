@@ -1,24 +1,32 @@
-@extends('layouts.app')
-
+@extends('hive::layouts.main')
+@section('title', $projeto->nome . ' - Projetos')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Projeto, {{ $projeto->nome }}</h1>
-    <a href="{{ url($projeto->path() . '/etapa/create') }}" class="mt-5 btn btn-primary">Adicionar etapa</a>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => $projeto->nome . ' - Projetos'])
 
-    <div class="card card-body shadow-lg my-4">
-      <div class="row">
-        <div class="col-lg-4">
-          <span><strong>Nome do projeto</strong><br> {{ $projeto->nome }}</span>
-        </div>
-        <div class="col-lg-4">
-          <span><strong>Cliente</strong><br> {{ $projeto->cliente->nome }}</span>
-        </div>
-        <div class="col-lg-4">
-          <span><strong>Data de início</strong><br> {{ $projeto->dt_inicio->format('d/m/Y') }}</span>
-        </div>
-      </div>
-    </div>
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('projeto-edit', $projeto)])
+
+	<div class="container-fluid">
+		@component('hive::components.card', ['title' => 'Informações básicas'])
+			<div class="row">
+				<div class="col-lg-4">
+					@component('hive::components.param', ['title' => 'Nome do projeto'])
+						{{ $projeto->nome }}
+					@endcomponent
+				</div>
+				<div class="col-lg-4">
+					@component('hive::components.param', ['title' => 'Nome do cliente'])
+						{{ $projeto->cliente->nome }}
+					@endcomponent
+				</div>
+				<div class="col-lg-4">
+					@component('hive::components.param', ['title' => 'Data de início'])
+						{{ ! empty($projeto->dt_inicio) ? $projeto->dt_inicio->format('d/m/Y') : 'Não definido' }}
+					@endcomponent
+				</div>
+			</div>
+		@endcomponent
 	</div>
-
 @endsection

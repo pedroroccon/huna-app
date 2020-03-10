@@ -18,6 +18,6 @@ class Responsavel extends Model
   }
     public function path()
     {
-      return 'responsavel/' . $this->id;
+      return config('hello.url') . '/responsavel/' . $this->id;
     }
 }

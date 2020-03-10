@@ -16,7 +16,7 @@ class CreateClienteEmailsTable extends Migration
         Schema::create('cliente_emails', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->unsignedBigInteger('cliente_id');
-          $table->string('email')->nullable();
+          $table->string('email');
           $table->timestamps();
 
           $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');

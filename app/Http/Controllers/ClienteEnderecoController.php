@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Cliente_endereco;
+use App\Cliente;
+use App\ClienteEndereco;
 use Illuminate\Http\Request;
 
 class ClienteEnderecoController extends Controller
@@ -12,9 +13,10 @@ class ClienteEnderecoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Cliente $cliente)
     {
-        //
+        $enderecos = $cliente->enderecos()->paginate();
+        return view('cliente.endereco.index', compact('cliente', 'enderecos'));
     }
 
     /**
@@ -22,9 +24,9 @@ class ClienteEnderecoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Cliente $cliente)
     {
-        //
+        return view('cliente.endereco.create', compact('cliente'));
     }
 
     /**
@@ -33,53 +35,60 @@ class ClienteEnderecoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Cliente $cliente)
     {
-        //
+        $endereco = (new ClienteEndereco)->fill($request->all());
+        $cliente->enderecos()->save($endereco);
+
+        return redirect($endereco->path());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cliente_endereco  $cliente_endereco
+     * @param  \App\ClienteEndereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente_endereco $cliente_endereco)
+    public function show(Cliente $cliente, ClienteEndereco $endereco)
     {
-        //
+        return view('cliente.endereco.show', compact('cliente', 'endereco'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cliente_endereco  $cliente_endereco
+     * @param  \App\Cliente_endereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente_endereco $cliente_endereco)
+    public function edit(Cliente $cliente, ClienteEndereco $endereco)
     {
-        //
+        return view('cliente.endereco.edit', compact('cliente', 'endereco'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente_endereco  $cliente_endereco
+     * @param  \App\ClienteEndereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente_endereco $cliente_endereco)
+    public function update(Request $request, Cliente $cliente, ClienteEndereco $endereco)
     {
-        //
+        $endereco->fill($request->all());
+        $endereco->update();
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cliente_endereco  $cliente_endereco
+     * @param  \App\ClienteEndereco  $endereco
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente_endereco $cliente_endereco)
+    public function destroy(Cliente $cliente, ClienteEndereco $endereco)
     {
-        //
+        $endereco->delete();
+        return back();
     }
 }

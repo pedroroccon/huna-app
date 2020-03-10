@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cliente_endereco extends Model
+class ClienteEndereco extends Model
 {
   protected $fillable = [
     'rua',

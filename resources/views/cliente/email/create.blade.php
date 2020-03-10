@@ -1,12 +1,15 @@
-@extends('layouts.app')
+@extends('hive::layouts.main')
+@section('title', 'Adicionar - E-mail - ' . $cliente->nome . ' - Clientes')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Adicionar e-mail do cliente, {{ $cliente->nome }}</h1>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Adicionar - E-mail - ' . $cliente->nome . ' - Clientes'])
 
-		{!! Form::open(['url' => $cliente->path() . '/email', 'method' => 'post']) !!}
-			@include('cliente.email.partials.form')
-		{!! Form::close() !!}
-	</div>
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-email-create', $cliente)])
+
+{!! Form::open(['url' => $cliente->path() . '/email', 'method' => 'post', 'class' => 'hello-form']) !!}
+	@include('cliente.email.partials.form', ['submit_button_text' => 'Salvar e-mail'])
+{!! Form::close() !!}
 
 @endsection

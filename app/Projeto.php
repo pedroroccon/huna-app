@@ -37,6 +37,6 @@ class Projeto extends Model
 
     public function path()
     {
-      return 'projeto/' . $this->id;
+      return config('hello.url') . '/projeto/' . $this->id;
     }
 }

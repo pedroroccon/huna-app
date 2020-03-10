@@ -14,7 +14,7 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $projetos = Projeto::all();
+        $projetos = Projeto::paginate();
         return view('projeto.index', compact('projetos'));
     }
 
@@ -40,7 +40,7 @@ class ProjetoController extends Controller
         $projeto->fill($request->all());
         $projeto->save();
 
-        return redirect('projeto');
+        return redirect(config('hello.url') . '/projeto');
     }
 
     /**
@@ -77,7 +77,7 @@ class ProjetoController extends Controller
         $projeto->fill($request->all());
         $projeto->update();
 
-        return redirect('projeto');
+        return redirect(config('hello.url') . '/projeto');
     }
 
     /**

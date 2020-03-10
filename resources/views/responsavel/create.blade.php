@@ -1,14 +1,15 @@
-@extends('layouts.app')
-
+@extends('hive::layouts.main')
+@section('title', 'Adicionar - Responsáveis')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Adicionar Responsável</h1>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Adicionar - Responsáveis'])
 
-		{!! Form::open(['url' => 'responsavel', 'method' => 'post']) !!}
-			@include('responsavel.partials.form')
-		{!! Form::close() !!}
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('responsavel-create')])
 
-	</div>
+	{!! Form::open(['url' => config('hello.url') . '/responsavel', 'method' => 'post', 'class' => 'hello-form']) !!}
+		@include('responsavel.partials.form', ['submit_button_text' => 'Salvar'])
+	{!! Form::close() !!}
 
 @endsection

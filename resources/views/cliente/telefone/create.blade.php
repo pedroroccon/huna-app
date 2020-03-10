@@ -1,12 +1,15 @@
-@extends('layouts.app')
+@extends('hive::layouts.main')
+@section('title', 'Adicionar - Telefone - ' . $cliente->nome . ' - Clientes')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Adicionar telefone do cliente, {{ $cliente->nome }}</h1>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Adicionar - Telefone - ' . $cliente->nome . ' - Clientes'])
 
-		{!! Form::open(['url' => $cliente->path() . '/telefone', 'method' => 'post']) !!}
-			@include('cliente.telefone.partials.form')
-		{!! Form::close() !!}
-	</div>
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-telefone-create', $cliente)])
+
+{!! Form::open(['url' => $cliente->path() . '/telefone', 'method' => 'post', 'class' => 'hello-form']) !!}
+	@include('cliente.telefone.partials.form', ['submit_button_text' => 'Salvar telefone'])
+{!! Form::close() !!}
 
 @endsection

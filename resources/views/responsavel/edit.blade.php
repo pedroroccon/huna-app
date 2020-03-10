@@ -1,14 +1,15 @@
-@extends('layouts.app')
-
+@extends('hive::layouts.main')
+@section('title', 'Editar - ' . $responsavel->nome . ' - Responsáveis')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Editar responsáveis, {{ $responsavel->nome }}</h1>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Editar - ' . $responsavel->nome . ' - Responsáveis'])
 
-		{!! Form::model($responsavel, ['url' => $responsavel->path(), 'method' => 'patch']) !!}
-			@include('responsavel.partials.form')
-		{!! Form::close() !!}
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('responsavel-edit', $responsavel)])
 
-	</div>
+	{!! Form::model($responsavel, ['url' => $responsavel->path(), 'method' => 'patch', 'class' => 'hello-form']) !!}
+		@include('responsavel.partials.form', ['submit_button_text' => 'Salvar'])
+	{!! Form::close() !!}
 
 @endsection

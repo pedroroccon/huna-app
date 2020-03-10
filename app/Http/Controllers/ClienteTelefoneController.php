@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Cliente_telefone;
+use App\Cliente;
+use App\ClienteTelefone;
 use Illuminate\Http\Request;
 
 class ClienteTelefoneController extends Controller
@@ -12,9 +13,10 @@ class ClienteTelefoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Cliente $cliente)
     {
-        //
+        $telefones = $cliente->telefones()->paginate();
+        return view('cliente.telefone.index', compact('cliente', 'telefones'));
     }
 
     /**
@@ -22,9 +24,9 @@ class ClienteTelefoneController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Cliente $cliente)
     {
-        //
+        return view('cliente.telefone.create', compact('cliente'));
     }
 
     /**
@@ -33,53 +35,60 @@ class ClienteTelefoneController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Cliente $cliente)
     {
-        //
+        $telefone = (new ClienteTelefone)->fill($request->all());
+        $cliente->telefones()->save($telefone);
+
+        return redirect($telefone->path());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cliente_telefone  $cliente_telefone
+     * @param  \App\ClienteTelefone  $telefone
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente_telefone $cliente_telefone)
+    public function show(Cliente $cliente, ClienteTelefone $telefone)
     {
-        //
+        return view('cliente.telefone.show', compact('cliente', 'telefone'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cliente_telefone  $cliente_telefone
+     * @param  \App\Cliente_telefone  $telefone
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente_telefone $cliente_telefone)
+    public function edit(Cliente $cliente, ClienteTelefone $telefone)
     {
-        //
+        return view('cliente.telefone.edit', compact('cliente', 'telefone'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente_telefone  $cliente_telefone
+     * @param  \App\ClienteTelefone  $telefone
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente_telefone $cliente_telefone)
+    public function update(Request $request, Cliente $cliente, ClienteTelefone $telefone)
     {
-        //
+        $telefone->fill($request->all());
+        $telefone->update();
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cliente_telefone  $cliente_telefone
+     * @param  \App\ClienteTelefone  $telefone
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente_telefone $cliente_telefone)
+    public function destroy(Cliente $cliente, ClienteTelefone $telefone)
     {
-        //
+        $telefone->delete();
+        return back();
     }
 }

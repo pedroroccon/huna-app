@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Cliente_email;
+use App\Cliente;
+use App\ClienteEmail;
 use Illuminate\Http\Request;
 
 class ClienteEmailController extends Controller
@@ -12,9 +13,10 @@ class ClienteEmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Cliente $cliente)
     {
-        //
+        $emails = $cliente->emails()->paginate();
+        return view('cliente.email.index', compact('cliente', 'emails'));
     }
 
     /**
@@ -22,9 +24,9 @@ class ClienteEmailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Cliente $cliente)
     {
-        //
+        return view('cliente.email.create', compact('cliente'));
     }
 
     /**
@@ -33,53 +35,60 @@ class ClienteEmailController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Cliente $cliente)
     {
-        //
+        $email = (new ClienteEmail)->fill($request->all());
+        $cliente->emails()->save($email);
+
+        return redirect($email->path());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Cliente_email  $cliente_email
+     * @param  \App\ClienteEmail  $email
      * @return \Illuminate\Http\Response
      */
-    public function show(Cliente_email $cliente_email)
+    public function show(Cliente $cliente, ClienteEmail $email)
     {
-        //
+        return view('cliente.email.show', compact('cliente', 'email'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Cliente_email  $cliente_email
+     * @param  \App\Cliente_email  $email
      * @return \Illuminate\Http\Response
      */
-    public function edit(Cliente_email $cliente_email)
+    public function edit(Cliente $cliente, ClienteEmail $email)
     {
-        //
+        return view('cliente.email.edit', compact('cliente', 'email'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Cliente_email  $cliente_email
+     * @param  \App\ClienteEmail  $email
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Cliente_email $cliente_email)
+    public function update(Request $request, Cliente $cliente, ClienteEmail $email)
     {
-        //
+        $email->fill($request->all());
+        $email->update();
+
+        return back();
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Cliente_email  $cliente_email
+     * @param  \App\ClienteEmail  $email
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Cliente_email $cliente_email)
+    public function destroy(Cliente $cliente, ClienteEmail $email)
     {
-        //
+        $email->delete();
+        return back();
     }
 }

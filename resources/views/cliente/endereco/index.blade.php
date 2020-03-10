@@ -1,44 +1,66 @@
-@extends('layouts.app')
-
+@extends('hive::layouts.main')
+@section('title', 'Endereços - ' . $cliente->nome . ' - Clientes')
 @section('content')
 
-	<div class="container">
-		<h1 class="mt-5">Endereço do cliente, {{ $cliente->nome }}</h1>
-		<a href="{{ url()->current() . '/create' }}" class="btn btn-primary" class="mb-5 d-block">Adicionar</a>
+<!-- Header -->
+@include('hive::components.title', ['page_title' => 'Endereços - ' . $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/endereco/create']])
 
-		<table class="table">
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Rua</th>
-					<th>Numero</th>
-					<th>Complemento</th>
-					<th>Bairro</th>
-					<th>Cidade</th>
-					<th>CEP</th>
-					<th>Ações</th>
-				</tr>
-			</thead>
-			<tbody>
-				@foreach($enderecos as $endereco)
-					<tr>
-						<td># {{ $endereco->id }}</td>
-						<td><a href="{{ url($endereco->path()) }}"><strong>{{ $endereco->rua }}</strong></a></td>
-						<td>{{ $endereco->numero }}</td>
-						<td>{{ $endereco->complemento }}</td>
-						<td>{{ $endereco->bairro }}</td>
-						<td>{{ $endereco->cidade }}</td>
-						<td>{{ $endereco->cep }}</td>
-						<td>
-							{!! Form::open(['url' => $endereco->path(), 'method' => 'delete']) !!}
-								<a href="{{ url($endereco->path() . '/edit') }}" class="btn btn-sm btn-primary">Editar</a>
-								{!! Form::submit('Remover', ['class' => 'btn btn-sm btn-danger']) !!}
-							{!! Form::close() !!}
-						</td>
-					</tr>
-				@endforeach
-			</tbody>
-		</table>
+<!-- Breadcrumbs -->
+@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-endereco', $cliente)])
+
+<div class="container-fluid">
+
+	<div class="card">
+		<div class="card-body">
+			@if($enderecos->count())
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="table-responsive">
+							<table class="table hello-table hello-table-no-wrap mb-0">
+								<thead>
+									<tr>
+										<th>ID</th>
+										<th>Rua</th>
+										<th>Número</th>
+										<th>Complemento</th>
+										<th>Bairro</th>
+										<th>Cidade</th>
+										<th>CEP</th>
+										<th class="hello-table-action">Ações</th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach($enderecos as $endereco)
+									<tr>
+										<td># {{ $endereco->id }}</td>
+										<td><a href="{{ url($endereco->path()) }}"><strong>{{ $endereco->rua }}</strong></a></td>
+										<td>{{ $endereco->numero }}</td>
+										<td>{{ $endereco->complemento }}</td>
+										<td>{{ $endereco->bairro }}</td>
+										<td>{{ $endereco->cidade }}</td>
+										<td>{{ $endereco->cep }}</td>
+										<td class="hello-table-action">
+											{!! Form::open(['url' => $endereco->path(), 'method' => 'delete']) !!}
+												<a class="btn btn-sm btn-link" data-toggle="tooltip" title="Editar" href="{{ url($endereco->path() . '/edit') }}"><i class="fas fa-pencil-alt fa-sm"></i></a>
+												<button class="btn btn-sm btn-link btn-confirm-delete" data-toggle="tooltip" title="Remover" type="submit"><i class="fas fa-trash fa-sm text-danger"></i></button>
+											{!! Form::close() !!}
+										</td>
+									</tr>
+									@endforeach
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			@else
+				@include('hive::components.no-results')
+			@endif
+		</div>
+
+		<!-- Paginação -->
+		@include('hive::components.pagination', ['resource' => $enderecos->appends(request()->except('page')), 'wrapper' => 'card-footer'])
+
 	</div>
+</div>
 
 @endsection

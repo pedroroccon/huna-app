@@ -16,12 +16,14 @@ class CreateClienteEnderecosTable extends Migration
         Schema::create('cliente_enderecos', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->unsignedBigInteger('cliente_id');
+          $table->string('titulo')->nullable()->default('Endereço padrão');
           $table->string('rua');
+          $table->integer('numero');
+          $table->string('bairro');
+          $table->string('cidade');
+          $table->char('estado', 2);
           $table->string('cep');
           $table->string('complemento')->nullable();
-          $table->string('cidade');
-          $table->string('bairro');
-          $table->integer('numero');
           $table->timestamps();
 
           $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');

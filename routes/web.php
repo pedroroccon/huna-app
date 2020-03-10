@@ -22,6 +22,12 @@ Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']],
     Route::resource('cliente/{cliente}/telefone', 'ClienteTelefoneController');
     Route::resource('cliente', 'ClienteController');
 
+    // Responsáveis
+    Route::resource('responsavel', 'ResponsavelController');
+
+    // Projetos
+    Route::resource('projeto', 'ProjetoController');
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -37,6 +43,6 @@ Route::resource('Etapa', 'EtapaController');
 Route::resource('projeto/{projeto}/ambiente', 'AmbienteController');
 Route::resource('projeto', 'ProjetoController');
 
-Route::resource('responsavel', 'ResponsavelController');
+
 Route::resource('etapa_tipo', 'EtapaTipoController');
 Route::resource('ambiente_tipo', 'AmbienteTipoController');
