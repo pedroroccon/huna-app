@@ -15,7 +15,7 @@ class AmbientesTableSeeder extends Seeder
         $ambientes = ['Sala', 'Cozinha', 'Lavanderia', 'Quarto', 'Banheiro', 'Área de lazer', 'Varanda'];
 
         foreach ($ambientes as $ambiente) {
-            Ambiente::create(['nome' => $ambiente]);
+            Ambiente::create(['nome' => $ambiente, 'descricao' => 'Ambiente cadastrado como teste']);
         }
     }
 }

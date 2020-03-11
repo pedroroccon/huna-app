@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Projeto;
+use App\ProjetoAmbiente;
+use App\Ambiente;
 use Illuminate\Http\Request;
 
 class ProjetoController extends Controller
@@ -14,7 +16,7 @@ class ProjetoController extends Controller
      */
     public function index()
     {
-        $projetos = Projeto::paginate();
+        $projetos = Projeto::withCount('ambientes')->paginate();
         return view('projeto.index', compact('projetos'));
     }
 
@@ -39,6 +41,29 @@ class ProjetoController extends Controller
         $projeto = new Projeto;
         $projeto->fill($request->all());
         $projeto->save();
+        
+        foreach($request->ambiente as $id => $quantidade) {
+
+            // Verificamos pela quantidade se será necessário
+            // adicionar o ambiente.
+            if ($quantidade > 0) {
+
+                // Retornamos todos os ambientes cadastrados
+                $ambientesCadastrados = Ambiente::all();
+
+                // Para cada quantidade, devemos criar um 
+                // ambiente, ou seja, 2 banheiros, 2 quartos, 
+                // 1 cozinha, etc...
+                for ($i = 1; $i <= $quantidade; $i++) {
+                    $ambienteNome = $ambientesCadastrados->find($id);
+                    $nome = ! empty($ambienteNome) ? $ambienteNome->nome : 'Ambiente não definido';
+                    $projeto->ambientes()->save(new ProjetoAmbiente([
+                        'nome' =>  $nome . ' #' . $i, 
+                        'descricao' => 'Ambiente cadastrado para o projeto ' . $projeto->nome, 
+                    ]));
+                }
+            }
+        }
 
         return redirect(config('hello.url') . '/projeto');
     }

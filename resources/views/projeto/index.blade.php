@@ -32,7 +32,7 @@
 								<tbody>
 									@foreach($projetos as $projeto)
 									<tr>
-										<td><a href="{{ url($projeto->path()) }}"><strong>{{ $projeto->nome }}</strong></a></td>
+										<td><a href="{{ url($projeto->path()) }}"><strong>{{ $projeto->nome }}</strong></a><br><small class="text-muted">{{ $projeto->ambientes_count }} ambiente(s)</small></td>
 										<td>{{ $projeto->cliente->nome }}</td>
 										<td class="text-right">R$ {{ number_format($projeto->orcamento, 2, ',', '.') }}</td>
 										<td>{{ ! empty($projeto->dt_contrato) ? $projeto->dt_contrato->format('d/m/Y') : 'Não informado' }}</td>

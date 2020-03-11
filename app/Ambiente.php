@@ -12,7 +12,6 @@ class Ambiente extends Model
 		'descricao', 
 	];
 	
-	
 	public function projeto()
 	{
 		return $this->hasMany(Projeto::class);
@@ -21,6 +20,11 @@ class Ambiente extends Model
 	public function path()
 	{
 		return config('hello.url') . '/ambiente/' . $this->id;
+	}
+
+	public function scopeOrdenado($query)
+	{
+		return $query->orderBy('nome');
 	}
 	
 }
