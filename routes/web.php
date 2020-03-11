@@ -12,10 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect(config('hello.url'));
 });
 
 Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']], function () {
+
+    Route::get('/', function() {
+        return view('hive.dashboard');
+    });
 
     Route::resource('cliente/{cliente}/endereco', 'ClienteEnderecoController');
     Route::resource('cliente/{cliente}/email', 'ClienteEmailController');
