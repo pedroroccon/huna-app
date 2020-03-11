@@ -125,3 +125,21 @@ Breadcrumbs::register('projeto-edit', function ($b, $projeto) {
     $b->parent('projeto-show', $projeto);
     $b->push('Editar', url($projeto->path() . '/edit'));
 });
+
+// Projetos, ambientes
+Breadcrumbs::register('projeto-ambiente', function ($b, $projeto) {
+    $b->parent('projeto', $projeto);
+    $b->push('Ambientes do projeto', url($projeto->path() . '/ambiente'));
+});
+Breadcrumbs::register('projeto-ambiente-create', function ($b, $projeto) {
+    $b->parent('projeto-ambiente', $projeto);
+    $b->push('Adicionar', url($projeto->path() . '/ambiente/create'));
+});
+Breadcrumbs::register('projeto-ambiente-show', function ($b, $projeto, $ambiente) {
+    $b->parent('projeto-ambiente', $projeto);
+    $b->push($ambiente->nome, url($ambiente->path()));
+});
+Breadcrumbs::register('projeto-ambiente-edit', function ($b, $projeto, $ambiente) {
+    $b->parent('projeto-ambiente-show', $projeto, $ambiente);
+    $b->push('Editar', url($ambiente->path() . '/edit'));
+});

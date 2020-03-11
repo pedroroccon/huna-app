@@ -26,6 +26,7 @@ Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']],
     Route::resource('responsavel', 'ResponsavelController');
 
     // Projetos
+    Route::resource('projeto/{projeto}/ambiente', 'ProjetoAmbienteController');
     Route::resource('projeto', 'ProjetoController');
 
     // Ambientes

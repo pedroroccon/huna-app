@@ -22,4 +22,14 @@ class ProjetoAmbiente extends Model
     {
         return $this->belongsTo(Projeto::class);
     }
+
+    public function path()
+    {
+        return $this->projeto->path() . '/ambiente/' . $this->id;
+    }
+
+    public function scopeOrdenado($query)
+    {
+        return $query->orderBy('nome');
+    }
 }

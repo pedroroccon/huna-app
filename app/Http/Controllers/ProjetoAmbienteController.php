@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Projeto;
 use App\ProjetoAmbiente;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,10 @@ class ProjetoAmbienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Projeto $projeto)
     {
-        //
+        $ambientes = $projeto->ambientes()->ordenado()->paginate();
+        return view('projeto.ambiente.index', compact('projeto', 'ambientes'));
     }
 
     /**
@@ -22,9 +24,9 @@ class ProjetoAmbienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Projeto $projeto)
     {
-        //
+        return view('projeto.ambiente.create', compact('projeto'));
     }
 
     /**
@@ -33,53 +35,65 @@ class ProjetoAmbienteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Projeto $projeto)
     {
-        //
+        $quantidade = $request->has('quantidade') ? $request->quantidade : 1;
+
+        for ($i = 1; $i <= $quantidade; $i++) {
+            $ambiente = (new ProjetoAmbiente)->fill($request->all());
+            $ambiente->nome = $ambiente->nome . ' #' . $i;
+            $projeto->ambientes()->save($ambiente);
+        }
+
+        return redirect($projeto->path() . '/ambiente');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\ProjetoAmbiente  $projetoAmbiente
+     * @param  \App\ProjetoAmbiente  $ambiente
      * @return \Illuminate\Http\Response
      */
-    public function show(ProjetoAmbiente $projetoAmbiente)
+    public function show(Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        return view('projeto.ambiente.show', compact('projeto', 'ambiente'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\ProjetoAmbiente  $projetoAmbiente
+     * @param  \App\ProjetoAmbiente  $ambiente
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProjetoAmbiente $projetoAmbiente)
+    public function edit(Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        return view('projeto.ambiente.edit', compact('projeto', 'ambiente'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\ProjetoAmbiente  $projetoAmbiente
+     * @param  \App\ProjetoAmbiente  $ambiente
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProjetoAmbiente $projetoAmbiente)
+    public function update(Request $request, Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        $ambiente->fill($request->all());
+        $ambiente->update();
+
+        return redirect($ambiente->path());
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\ProjetoAmbiente  $projetoAmbiente
+     * @param  \App\ProjetoAmbiente  $ambiente
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProjetoAmbiente $projetoAmbiente)
+    public function destroy(Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        $ambiente->delete();
+        return back();
     }
 }

@@ -1,13 +1,14 @@
-@extends('hive::layouts.main')
+@extends('projeto.partials.layout')
 @section('title', $projeto->nome . ' - Projetos')
-@section('content')
 
-<!-- Header -->
-@include('hive::components.title', ['page_title' => $projeto->nome . ' - Projetos'])
+@section('s-header')
+	<!-- Header -->
+	@include('hive::components.title', ['page_title' => $projeto->nome . ' - Projetos'])
+	<!-- Breadcrumbs -->
+	@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('projeto-edit', $projeto)])
+@endsection
 
-<!-- Breadcrumbs -->
-@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('projeto-edit', $projeto)])
-
+@section('s-content')
 	<div class="container-fluid">
 		@component('hive::components.card', ['title' => 'Informações básicas'])
 			<div class="row">
