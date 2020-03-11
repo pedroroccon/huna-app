@@ -46,9 +46,22 @@ class Projeto extends Model
 		return $this->belongsTo(Cliente::class);
 	}
 	
-	
 	public function path()
 	{
 		return config('hello.url') . '/projeto/' . $this->id;
 	}
+
+	/**
+     * Scope responsável por aplicar
+     * os filtros definidos para
+     * este recurso.
+     *
+     * @param  \Illuminate\Database\Query\Builder  $query
+     * @param  \Illuminate\Database\Query\Builder  $filters
+     * @return \Illuminate\Database\Query\Builder
+     */
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
 }

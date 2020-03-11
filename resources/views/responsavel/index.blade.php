@@ -12,6 +12,9 @@
 
 	<div class="card">
 		<div class="card-body">
+
+			@include('responsavel.partials.toolbar')
+
 			@if($responsaveis->count())
 				<div class="row">
 					<div class="col-lg-12">
@@ -56,5 +59,8 @@
 
 	</div>
 </div>
+
+<!-- Modals -->
+@include('responsavel.partials.pesquisar')
 
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Ambiente;
+use App\Filters\AmbienteFilters;
 use Illuminate\Http\Request;
 
 class AmbienteController extends Controller
@@ -12,9 +13,9 @@ class AmbienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(AmbienteFilters $filters)
     {
-        $ambientes = Ambiente::paginate();
+        $ambientes = Ambiente::filter($filters)->paginate();
         return view('ambiente.index', compact('ambientes'));
     }
 

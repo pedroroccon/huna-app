@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Filters\ClienteFilters;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
@@ -12,14 +13,9 @@ class ClienteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ClienteFilters $filters)
     {
-        // Buscar os clientes na base de dados (todos)
-        $clientes = Cliente::paginate();
-
-        // return view('cliente.index')->with([
-        //  'c' => $clientes,
-        // ])
+        $clientes = Cliente::filter($filters)->paginate();
         return view('cliente.index', compact('clientes'));
     }
 

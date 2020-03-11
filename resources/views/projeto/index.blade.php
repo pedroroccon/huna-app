@@ -12,6 +12,9 @@
 
 	<div class="card">
 		<div class="card-body">
+
+			@include('projeto.partials.toolbar')
+
 			@if($projetos->count())
 				<div class="row">
 					<div class="col-lg-12">
@@ -33,7 +36,7 @@
 									@foreach($projetos as $projeto)
 									<tr>
 										<td><a href="{{ url($projeto->path()) }}"><strong>{{ $projeto->nome }}</strong></a><br><small class="text-muted">{{ $projeto->ambientes_count }} ambiente(s)</small></td>
-										<td>{{ $projeto->cliente->nome }}</td>
+										<td><a href="{{ url($projeto->cliente->path()) }}">{{ $projeto->cliente->nome }}</a></td>
 										<td class="text-right">R$ {{ number_format($projeto->orcamento, 2, ',', '.') }}</td>
 										<td>{{ ! empty($projeto->dt_contrato) ? $projeto->dt_contrato->format('d/m/Y') : 'Não informado' }}</td>
 										<td>{{ ! empty($projeto->dt_inicio) ? $projeto->dt_inicio->format('d/m/Y') : 'Não informado' }}</td>
@@ -62,5 +65,8 @@
 
 	</div>
 </div>
+
+<!-- Modals -->
+@include('projeto.partials.pesquisar')
 
 @endsection

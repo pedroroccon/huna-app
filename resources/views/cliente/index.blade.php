@@ -12,6 +12,9 @@
 
 	<div class="card">
 		<div class="card-body">
+
+			@include('cliente.partials.toolbar')
+
 			@if($clientes->count())
 				<div class="row">
 					<div class="col-lg-12">
@@ -54,5 +57,8 @@
 
 	</div>
 </div>
+
+<!-- Modals -->
+@include('cliente.partials.pesquisar')
 
 @endsection

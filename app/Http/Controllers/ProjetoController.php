@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Projeto;
 use App\ProjetoAmbiente;
 use App\Ambiente;
+use App\Filters\ProjetoFilters;
 use Illuminate\Http\Request;
 
 class ProjetoController extends Controller
@@ -14,9 +15,9 @@ class ProjetoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ProjetoFilters $filters)
     {
-        $projetos = Projeto::withCount('ambientes')->paginate();
+        $projetos = Projeto::withCount('ambientes')->filter($filters)->paginate();
         return view('projeto.index', compact('projetos'));
     }
 

@@ -51,4 +51,7 @@
 	</div>
 </div>
 
+<!-- Modals -->
+@include('ambiente.partials.pesquisar')
+
 @endsection
