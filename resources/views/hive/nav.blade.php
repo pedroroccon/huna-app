@@ -33,3 +33,15 @@
 		</ul>
 	</div>
 </div>
+
+<!-- Ambientes -->
+<div class="item">
+	<div class="hello-nav-menu-item-image"><img src="{{ asset('hive-assets/svg/hello-svg/001-rgb.svg') }}" alt="Ambientes"></div>
+	<a class="hello-nav-menu-item" data-toggle="collapse" data-parent="#hello-nav-accordion" href="#nav-ambientes">Ambientes</a>
+	<div id="nav-ambientes" class="collapse">
+		<ul class="hello-nav-list">
+			<li><a href="{{ url(config('hello.url') . '/ambiente') }}">Listar ambiente</a></li>
+			<li><a href="{{ url(config('hello.url') . '/ambiente/create') }}">Adicionar ambiente</a></li>
+		</ul>
+	</div>
+</div>

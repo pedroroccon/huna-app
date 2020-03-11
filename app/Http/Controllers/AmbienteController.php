@@ -14,7 +14,8 @@ class AmbienteController extends Controller
      */
     public function index()
     {
-        //
+        $ambientes = Ambiente::paginate();
+        return view('ambiente.index', compact('ambientes'));
     }
 
     /**
@@ -24,7 +25,7 @@ class AmbienteController extends Controller
      */
     public function create()
     {
-        //
+        return view('ambiente.create');
     }
 
     /**
@@ -35,7 +36,10 @@ class AmbienteController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $ambiente = (new Ambiente)->fill($request->all());
+        $ambiente->save();
+
+        return redirect($ambiente->path());
     }
 
     /**
@@ -46,7 +50,7 @@ class AmbienteController extends Controller
      */
     public function show(Ambiente $ambiente)
     {
-        //
+        return view('ambiente.show', compact('ambiente'));
     }
 
     /**
@@ -57,7 +61,7 @@ class AmbienteController extends Controller
      */
     public function edit(Ambiente $ambiente)
     {
-        //
+        return view('ambiente.edit', compact('ambiente'));
     }
 
     /**
@@ -69,7 +73,10 @@ class AmbienteController extends Controller
      */
     public function update(Request $request, Ambiente $ambiente)
     {
-        //
+        $ambiente->fill($request->all());
+        $ambiente->update();
+
+        return redirect($ambiente->path());
     }
 
     /**
@@ -80,6 +87,7 @@ class AmbienteController extends Controller
      */
     public function destroy(Ambiente $ambiente)
     {
-        //
+        $ambiente->delete();
+        return back();
     }
 }

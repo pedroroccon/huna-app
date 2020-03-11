@@ -1,13 +1,14 @@
-@extends('hive::layouts.main')
+@extends('cliente.partials.layout')
 @section('title', 'Endereços - ' . $cliente->nome . ' - Clientes')
-@section('content')
 
-<!-- Header -->
-@include('hive::components.title', ['page_title' => 'Endereços - ' . $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/endereco/create']])
+@section('s-header')
+	<!-- Header -->
+	@include('hive::components.title', ['page_title' => 'Endereços - ' . $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/endereco/create']])
+	<!-- Breadcrumbs -->
+	@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-endereco', $cliente)])
+@endsection
 
-<!-- Breadcrumbs -->
-@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-endereco', $cliente)])
-
+@section('s-content')
 <div class="container-fluid">
 
 	<div class="card">
@@ -20,11 +21,9 @@
 								<thead>
 									<tr>
 										<th>ID</th>
-										<th>Rua</th>
-										<th>Número</th>
+										<th>Endereço</th>
 										<th>Complemento</th>
-										<th>Bairro</th>
-										<th>Cidade</th>
+										<th>Cidade/Estado</th>
 										<th>CEP</th>
 										<th class="hello-table-action">Ações</th>
 									</tr>
@@ -33,11 +32,9 @@
 									@foreach($enderecos as $endereco)
 									<tr>
 										<td># {{ $endereco->id }}</td>
-										<td><a href="{{ url($endereco->path()) }}"><strong>{{ $endereco->rua }}</strong></a></td>
-										<td>{{ $endereco->numero }}</td>
-										<td>{{ $endereco->complemento }}</td>
-										<td>{{ $endereco->bairro }}</td>
-										<td>{{ $endereco->cidade }}</td>
+										<td><a href="{{ url($endereco->path()) }}"><strong>{{ $endereco->rua }}, N {{ $endereco->numero }} - {{ $endereco->bairro }}</strong></a></td>
+										<td>{!! $endereco->complemento ?? '<span class="text-muted">Não há</span>' !!}</td>
+										<td>{{ $endereco->cidade }}/{{ $endereco->estado }}</td>
 										<td>{{ $endereco->cep }}</td>
 										<td class="hello-table-action">
 											{!! Form::open(['url' => $endereco->path(), 'method' => 'delete']) !!}

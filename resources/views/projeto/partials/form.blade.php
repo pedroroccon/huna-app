@@ -3,19 +3,20 @@
 	@component('hive::components.card', ['title' => 'Informações gerais'])
 
 		<div class="row form-group">
-			<div class="col-lg-7">
+			<div class="col-lg-6">
 				{!! Form::label('cliente_id', 'Selecione o cliente') !!}
 				{!! Form::select('cliente_id', [
 					'Por favor, selecione...',
 				] + App\Cliente::orderBy('nome', 'asc')->get()->pluck('nome', 'id')->toArray(), null, ['class' => 'form-control']) !!}
 			</div>
-		</div>
-	
-		<div class="row form-group">
-			<div class="col-lg-4">
+			<div class="col-lg-6">
 				{!! Form::label('nome', 'Nome do projeto') !!}
 				{!! Form::text('nome', null, ['class' => 'form-control']) !!}
 			</div>
+		</div>
+	
+		<div class="row form-group">
+			
 			<div class="col-lg-4">
 				{!! Form::label('orcamento', 'Orçamento') !!}
 				{!! Form::number('orcamento', null, ['class' => 'form-control', 'step' => 'any']) !!}

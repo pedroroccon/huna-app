@@ -13,7 +13,7 @@ class CreateResponsavelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('responsavels', function (Blueprint $table) {
+        Schema::create('responsaveis', function (Blueprint $table) {
           $table->bigIncrements('id');
           $table->string('cargo');
           $table->string('nome');
@@ -30,6 +30,6 @@ class CreateResponsavelsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('responsavels');
+        Schema::dropIfExists('responsaveis');
     }
 }

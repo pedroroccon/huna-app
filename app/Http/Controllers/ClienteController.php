@@ -45,7 +45,7 @@ class ClienteController extends Controller
         $cliente->fill($request->all());
         $cliente->save();
 
-        return redirect('cliente');
+        return redirect(config('hello.url') . '/cliente');
     }
 
     /**
@@ -83,7 +83,7 @@ class ClienteController extends Controller
         $cliente->fill($request->all());
         $cliente->update();
 
-        return redirect('cliente');
+        return redirect(config('hello.url') . '/cliente');
     }
 
     /**

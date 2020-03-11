@@ -7,11 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class ClienteEndereco extends Model
 {
   protected $fillable = [
+    'titulo', 
     'rua',
     'numero',
     'complemento',
     'bairro',
     'cidade',
+    'estado', 
     'cep',
   ];
   public function cliente()

@@ -28,13 +28,16 @@ Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']],
     // Projetos
     Route::resource('projeto', 'ProjetoController');
 
+    // Ambientes
+    Route::resource('ambiente', 'AmbienteController');
+
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::resource('ambiente/{ambiente}/ambiente_tipo', 'AmbienteTipoController');
-Route::resource('ambiente', 'AmbienteController');
+
 
 Route::resource('etapa/{etapa}/etapa_tipo', 'EtapaTipoController');
 Route::resource('etapa/{etapa}/responsavel', 'ResponsavelController');

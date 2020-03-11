@@ -90,6 +90,24 @@ Breadcrumbs::register('responsavel-edit', function ($b, $responsavel) {
     $b->push('Editar', url($responsavel->path() . '/edit'));
 });
 
+// Ambientes
+Breadcrumbs::register('ambiente', function ($b) {
+    $b->parent('hello-home');
+    $b->push('Ambientes', url(config('hello.url') . '/ambiente'));
+});
+Breadcrumbs::register('ambiente-create', function ($b) {
+    $b->parent('ambiente');
+    $b->push('Adicionar', url(config('hello.url') . '/ambiente/create'));
+});
+Breadcrumbs::register('ambiente-show', function ($b, $ambiente) {
+    $b->parent('ambiente');
+    $b->push($ambiente->nome, url($ambiente->path()));
+});
+Breadcrumbs::register('ambiente-edit', function ($b, $ambiente) {
+    $b->parent('ambiente-show', $ambiente);
+    $b->push('Editar', url($ambiente->path() . '/edit'));
+});
+
 // Projetos
 Breadcrumbs::register('projeto', function ($b) {
     $b->parent('hello-home');

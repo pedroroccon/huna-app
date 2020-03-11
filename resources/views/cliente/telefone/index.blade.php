@@ -1,13 +1,14 @@
-@extends('hive::layouts.main')
+@extends('cliente.partials.layout')
 @section('title', 'Telefones - ' . $cliente->nome . ' - Clientes')
-@section('content')
 
-<!-- Header -->
-@include('hive::components.title', ['page_title' => 'Telefones - ' . $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/telefone/create']])
+@section('s-header')
+	<!-- Header -->
+	@include('hive::components.title', ['page_title' => 'Telefones - ' . $cliente->nome . ' - Clientes', 'page_button' => ['Adicionar', $cliente->path() . '/telefone/create']])
+	<!-- Breadcrumbs -->
+	@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-telefone', $cliente)])
+@endsection
 
-<!-- Breadcrumbs -->
-@include('hive::components.breadcrumbs', ['breadcrumb' => Breadcrumbs::render('cliente-telefone', $cliente)])
-
+@section('s-content')
 <div class="container-fluid">
 
 	<div class="card">
