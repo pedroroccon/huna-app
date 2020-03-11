@@ -23,6 +23,11 @@ class ProjetoAmbiente extends Model
         return $this->belongsTo(Projeto::class);
     }
 
+    public function etapas()
+    {
+        return $this->hasMany(ProjetoAmbienteEtapa::class);
+    }
+
     public function path()
     {
         return $this->projeto->path() . '/ambiente/' . $this->id;

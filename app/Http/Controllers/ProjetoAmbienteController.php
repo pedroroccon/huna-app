@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Projeto;
 use App\ProjetoAmbiente;
+use App\ProjetoAmbienteEtapa;
 use Illuminate\Http\Request;
 
 class ProjetoAmbienteController extends Controller
@@ -42,7 +43,16 @@ class ProjetoAmbienteController extends Controller
         for ($i = 1; $i <= $quantidade; $i++) {
             $ambiente = (new ProjetoAmbiente)->fill($request->all());
             $ambiente->nome = $ambiente->nome . ' #' . $i;
-            $projeto->ambientes()->save($ambiente);
+            $ambiente = $projeto->ambientes()->save($ambiente);
+
+            $etapas = ['Desenho', 'Corte', 'Corte bordo', 'Premontagen', 'Montagem'];
+
+            foreach($etapas as $indice => $etapa) {
+                $ambiente->etapas()->save(new ProjetoAmbienteEtapa([
+                    'nome' => $etapa, 
+                    'sequencia' => $indice + 1, 
+                ]));
+            }
         }
 
         return redirect($projeto->path() . '/ambiente');
@@ -56,7 +66,8 @@ class ProjetoAmbienteController extends Controller
      */
     public function show(Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        return view('projeto.ambiente.show', compact('projeto', 'ambiente'));
+        $etapas = $ambiente->etapas;
+        return view('projeto.ambiente.show', compact('projeto', 'ambiente', 'etapas'));
     }
 
     /**

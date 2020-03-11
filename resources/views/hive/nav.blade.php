@@ -1,6 +1,6 @@
 <!-- Clientes -->
 <div class="item">
-	<div class="hello-nav-menu-item-image"><img src="{{ asset('hive-assets/svg/hello-svg/011-employees.svg') }}" alt="Clientes"></div>
+	<div class="hello-nav-menu-item-image"><img src="{{ asset('h-assets/svg/hello-svg/011-employees.svg') }}" alt="Clientes"></div>
 	<a class="hello-nav-menu-item" data-toggle="collapse" data-parent="#hello-nav-accordion" href="#nav-cliente">Clientes</a>
 	<div id="nav-cliente" class="collapse">
 		<ul class="hello-nav-list">
@@ -12,7 +12,7 @@
 
 <!-- Responsáveis -->
 <div class="item">
-	<div class="hello-nav-menu-item-image"><img src="{{ asset('hive-assets/svg/hello-svg/001-rgb.svg') }}" alt="Responsáveis"></div>
+	<div class="hello-nav-menu-item-image"><img src="{{ asset('h-assets/svg/hello-svg/001-rgb.svg') }}" alt="Responsáveis"></div>
 	<a class="hello-nav-menu-item" data-toggle="collapse" data-parent="#hello-nav-accordion" href="#nav-responsaveis">Responsáveis</a>
 	<div id="nav-responsaveis" class="collapse">
 		<ul class="hello-nav-list">
@@ -24,7 +24,7 @@
 
 <!-- Projetos -->
 <div class="item">
-	<div class="hello-nav-menu-item-image"><img src="{{ asset('hive-assets/svg/hello-svg/001-rgb.svg') }}" alt="Projetos"></div>
+	<div class="hello-nav-menu-item-image"><img src="{{ asset('h-assets/svg/hello-svg/001-rgb.svg') }}" alt="Projetos"></div>
 	<a class="hello-nav-menu-item" data-toggle="collapse" data-parent="#hello-nav-accordion" href="#nav-projetos">Projetos</a>
 	<div id="nav-projetos" class="collapse">
 		<ul class="hello-nav-list">
@@ -36,7 +36,7 @@
 
 <!-- Ambientes -->
 <div class="item">
-	<div class="hello-nav-menu-item-image"><img src="{{ asset('hive-assets/svg/hello-svg/001-rgb.svg') }}" alt="Ambientes"></div>
+	<div class="hello-nav-menu-item-image"><img src="{{ asset('h-assets/svg/hello-svg/001-rgb.svg') }}" alt="Ambientes"></div>
 	<a class="hello-nav-menu-item" data-toggle="collapse" data-parent="#hello-nav-accordion" href="#nav-ambientes">Ambientes</a>
 	<div id="nav-ambientes" class="collapse">
 		<ul class="hello-nav-list">
