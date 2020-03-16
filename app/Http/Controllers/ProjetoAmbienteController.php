@@ -44,15 +44,6 @@ class ProjetoAmbienteController extends Controller
             $ambiente = (new ProjetoAmbiente)->fill($request->all());
             $ambiente->nome = $ambiente->nome . ' #' . $i;
             $ambiente = $projeto->ambientes()->save($ambiente);
-
-            $etapas = ['Desenho', 'Corte', 'Corte bordo', 'Premontagen', 'Montagem'];
-
-            foreach($etapas as $indice => $etapa) {
-                $ambiente->etapas()->save(new ProjetoAmbienteEtapa([
-                    'nome' => $etapa, 
-                    'sequencia' => $indice + 1, 
-                ]));
-            }
         }
 
         return redirect($projeto->path() . '/ambiente');

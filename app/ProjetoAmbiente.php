@@ -33,6 +33,14 @@ class ProjetoAmbiente extends Model
         return $this->projeto->path() . '/ambiente/' . $this->id;
     }
 
+    public function etapaAtual()
+    {
+        return $this->etapas()->where(function ($w) {
+            $w->whereNull('inicio_em');
+            $w->orWhereNull('termino_em');
+        })->ordenado()->first();
+    }
+
     /**
      * Scope responsável por aplicar
      * os filtros definidos para

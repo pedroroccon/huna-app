@@ -37,20 +37,25 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($etapas as $etapa)
-                                        <tr>
-                                            <td><a href="#"><strong>{{ $etapa->nome }}</strong></a></td>
-                                            <td>{!! ! empty($etapa->inicio_em) ? $inicio_em->format('d/m/Y') : '<span class="text-muted">Não informado</span>' !!}</td>
-                                            <td>{!! ! empty($etapa->termino_em) ? $termino_em->format('d/m/Y') : '<span class="text-muted">Não informado</span>' !!}</td>
-                                            <td>-</td>
-                                            <td>Responsável</td>
-                                            <td class="hello-table-action">
-                                                {!! Form::open(['url' => $etapa->path(), 'method' => 'delete']) !!}
-                                                    <a class="btn btn-sm btn-link" data-toggle="tooltip" title="Editar" href="{{ url($etapa->path() . '/edit') }}"><i class="fas fa-pencil-alt fa-sm"></i></a>
-                                                    <button class="btn btn-sm btn-link btn-confirm-delete" data-toggle="tooltip" title="Remover" type="submit"><i class="fas fa-trash fa-sm text-danger"></i></button>
-                                                {!! Form::close() !!}
-                                            </td>
-                                        </tr>
+                                        @foreach($etapas as $indice => $etapa)
+                                            <tr>
+                                                <td><a href="#"><strong>{{ $etapa->nome }}</strong></a></td>
+                                                <td>{!! ! empty($etapa->inicio_em) ? $etapa->inicio_em->format('d/m/Y') : '<span class="text-muted">Não informado</span>' !!}</td>
+                                                <td>{!! ! empty($etapa->termino_em) ? $etapa->termino_em->format('d/m/Y') : '<span class="text-muted">Não informado</span>' !!}</td>
+                                                <td>{{ $etapa->concluida() ? 'Concluído' : 'Em processo' }}</td>
+                                                <td>{{ ! empty($etapa->responsavel) ? $etapa->responsavel->nome : 'Não atrelado' }}</td>
+                                                <td class="hello-table-action">
+                                                    {!! Form::open(['url' => $etapa->path(), 'method' => 'delete']) !!}
+                                                        @if ( isset($etapas[$indice - 1]) and ! $etapas[$indice]->concluida() and $etapas[$indice -1]->concluida())
+                                                            <a class="btn btn-sm btn-link" data-toggle="modal" data-target="#m-inicio" title="Iniciar" data-url="{{ url($etapa->path() . '/iniciar') }}" data-etapa="{{ $etapa->nome }}" href="#"><i class="far fa-play-circle fa-fw"></i></a>
+                                                            <a class="btn btn-sm btn-link" data-toggle="modal" data-target="#m-termino" title="Encerrar" data-url="{{ url($etapa->path() . '/encerrar') }}" data-etapa="{{ $etapa->nome }}" href="#"><i class="far fa-check-circle fa-fw"></i></a>
+                                                        @endif
+                                                        <a class="btn btn-sm btn-link" data-toggle="modal" data-target="#m-responsavel" title="Responsável" data-url="{{ url($etapa->path() . '/responsavel') }}" data-etapa="{{ $etapa->nome }}" href="#"><i class="fas fa-user-check fa-sm"></i></a>
+                                                        <a class="btn btn-sm btn-link" data-toggle="tooltip" title="Editar" href="{{ url($etapa->path() . '/edit') }}"><i class="fas fa-pencil-alt fa-sm"></i></a>
+                                                        <button class="btn btn-sm btn-link btn-confirm-delete" data-toggle="tooltip" title="Remover" type="submit"><i class="fas fa-trash fa-sm text-danger"></i></button>
+                                                    {!! Form::close() !!}
+                                                </td>
+                                            </tr>
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -64,5 +69,47 @@
 
         </div>
     </div>
+
+    <!-- Modals -->
+    @include('projeto.ambiente.modals.responsavel')
+    @include('projeto.ambiente.modals.inicio')
+    @include('projeto.ambiente.modals.termino')
+
+@endsection
+
+@section('script')
+
+<script type="application/javascript">
+    $(function() {
+        
+        $('#m-responsavel').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            var url = button.data('url'); 
+            var etapa = button.data('etapa');
+            var modal = $(this)
+            modal.find('.modal-title').text('Definir responsável para a etapa ' + etapa)
+            modal.find('form').attr('action', url);
+        });
+
+        $('#m-inicio').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            var url = button.data('url'); 
+            var etapa = button.data('etapa');
+            var modal = $(this)
+            modal.find('.modal-title').text('Definir início para a etapa ' + etapa)
+            modal.find('form').attr('action', url);
+        });
+
+        $('#m-termino').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            var url = button.data('url'); 
+            var etapa = button.data('etapa');
+            var modal = $(this)
+            modal.find('.modal-title').text('Definir término para a etapa ' + etapa)
+            modal.find('form').attr('action', url);
+        });
+
+    });
+</script>
 
 @endsection

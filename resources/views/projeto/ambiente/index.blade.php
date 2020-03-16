@@ -28,7 +28,7 @@
 									@foreach($ambientes as $ambiente)
 									<tr>
                                         <td><a href="{{ url($ambiente->path()) }}"><strong>{{ $ambiente->nome }}</strong></a><br><small class="text-muted">{{ $ambiente->descricao }}</small></td>
-										<td>Aguardando início</td>
+										<td>{!! ! empty($ambiente->etapaAtual) ? '<a href="' . url($ambiente->etapaAtual->path()) . '">' . $ambiente->etapaAtual->nome . '</a><br><small class="text-muted"></small>' : 'Etapa não encontrada' !!}</td>
 										<td class="hello-table-action">
 											{!! Form::open(['url' => $ambiente->path(), 'method' => 'delete']) !!}
 												<a class="btn btn-sm btn-link" data-toggle="tooltip" title="Editar" href="{{ url($ambiente->path() . '/edit') }}"><i class="fas fa-pencil-alt fa-sm"></i></a>

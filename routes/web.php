@@ -30,6 +30,9 @@ Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']],
     Route::resource('responsavel', 'ResponsavelController');
 
     // Projetos
+    Route::post('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/iniciar', 'ProjetoAmbienteEtapaController@iniciar');
+    Route::post('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/encerrar', 'ProjetoAmbienteEtapaController@encerrar');
+    Route::post('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/responsavel', 'ProjetoAmbienteEtapaController@responsavel');
     Route::resource('projeto/{projeto}/ambiente', 'ProjetoAmbienteController');
     Route::resource('projeto', 'ProjetoController');
 
@@ -39,18 +42,3 @@ Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']],
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-
-Route::resource('ambiente/{ambiente}/ambiente_tipo', 'AmbienteTipoController');
-
-
-Route::resource('etapa/{etapa}/etapa_tipo', 'EtapaTipoController');
-Route::resource('etapa/{etapa}/responsavel', 'ResponsavelController');
-Route::resource('Etapa', 'EtapaController');
-
-Route::resource('projeto/{projeto}/ambiente', 'AmbienteController');
-Route::resource('projeto', 'ProjetoController');
-
-
-Route::resource('etapa_tipo', 'EtapaTipoController');
-Route::resource('ambiente_tipo', 'AmbienteTipoController');

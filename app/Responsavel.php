@@ -38,5 +38,10 @@ class Responsavel extends Model
     public function scopeFilter($query, $filters)
     {
         return $filters->apply($query);
-    }
+	}
+	
+	public function scopeOrdenado($query)
+	{
+		return $query->orderBy('nome');
+	}
 }
