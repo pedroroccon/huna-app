@@ -143,3 +143,45 @@ Breadcrumbs::register('projeto-ambiente-edit', function ($b, $projeto, $ambiente
     $b->parent('projeto-ambiente-show', $projeto, $ambiente);
     $b->push('Editar', url($ambiente->path() . '/edit'));
 });
+
+// Projetos, ambientes, etapas
+Breadcrumbs::register('projeto-ambiente-etapa', function ($b, $projeto, $ambiente) {
+    $b->parent('projeto-ambiente-show', $projeto, $ambiente);
+    $b->push('Etapas', url($ambiente->path() . '/etapa'));
+});
+Breadcrumbs::register('projeto-ambiente-etapa-create', function ($b, $projeto, $ambiente) {
+    $b->parent('projeto-ambiente-etapa', $projeto, $ambiente);
+    $b->push('Adicionar', url($ambiente->path() . '/etapa/create'));
+});
+Breadcrumbs::register('projeto-ambiente-etapa-show', function ($b, $projeto, $ambiente, $etapa) {
+    $b->parent('projeto-ambiente-etapa', $projeto, $ambiente);
+    $b->push($etapa->nome, url($etapa->path()));
+});
+Breadcrumbs::register('projeto-ambiente-etapa-edit', function ($b, $projeto, $ambiente, $etapa) {
+    $b->parent('projeto-ambiente-etapa-show', $projeto, $ambiente, $etapa);
+    $b->push('Editar', url($etapa->path() . '/edit'));
+});
+
+// Projetos, ambientes, etapas, itens
+Breadcrumbs::register('projeto-ambiente-etapa-item', function ($b, $projeto, $ambiente, $etapa) {
+    $b->parent('projeto-ambiente-etapa-show', $projeto, $ambiente, $etapa);
+    $b->push('Itens da etapa', url($etapa->path() . '/item'));
+});
+Breadcrumbs::register('projeto-ambiente-etapa-item-create', function ($b, $projeto, $ambiente, $etapa) {
+    $b->parent('projeto-ambiente-etapa-item', $projeto, $ambiente, $etapa);
+    $b->push('Adicionar', url($etapa->path() . '/item/create'));
+});
+Breadcrumbs::register('projeto-ambiente-etapa-item-show', function ($b, $projeto, $ambiente, $etapa, $item) {
+    $b->parent('projeto-ambiente-etapa-item', $projeto, $ambiente, $etapa);
+    $b->push($item->titulo, url($item->path()));
+});
+Breadcrumbs::register('projeto-ambiente-etapa-item-edit', function ($b, $projeto, $ambiente, $etapa, $item) {
+    $b->parent('projeto-ambiente-etapa-item-show', $projeto, $ambiente, $etapa, $item);
+    $b->push('Editar', url($item->path() . '/edit'));
+});
+
+// Projeto, relatórios
+Breadcrumbs::register('projeto-relatorio-visao-geral', function ($b) {
+    $b->parent('projeto');
+    $b->push('Visão geral', url(config('hello.url') . '/projeto/relatorio/visao-geral'));
+});

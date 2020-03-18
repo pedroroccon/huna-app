@@ -15,8 +15,8 @@ class CreateResponsavelsTable extends Migration
     {
         Schema::create('responsaveis', function (Blueprint $table) {
           $table->bigIncrements('id');
-          $table->string('cargo');
           $table->string('nome');
+          $table->string('cargo');
           $table->string('celular');
           $table->string('email');
           $table->timestamps();

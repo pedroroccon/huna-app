@@ -29,10 +29,17 @@ Route::group(['prefix' => config('hello.url'), 'middleware' => ['web', 'auth']],
     // Responsáveis
     Route::resource('responsavel', 'ResponsavelController');
 
+    // Projetos, relatórios
+    Route::match(['get', 'post'], 'projeto/relatorio/visao-geral', 'ProjetoRelatorioController@visaoGeral');
+
     // Projetos
     Route::post('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/iniciar', 'ProjetoAmbienteEtapaController@iniciar');
     Route::post('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/encerrar', 'ProjetoAmbienteEtapaController@encerrar');
     Route::post('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/responsavel', 'ProjetoAmbienteEtapaController@responsavel');
+    Route::match(['get', 'post'], 'projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/item/{item}/desconcluir', 'ProjetoAmbienteEtapaItemController@desconcluir');
+    Route::match(['get', 'post'], 'projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/item/{item}/concluir', 'ProjetoAmbienteEtapaItemController@concluir');
+    Route::resource('projeto/{projeto}/ambiente/{ambiente}/etapa/{etapa}/item', 'ProjetoAmbienteEtapaItemController');
+    Route::resource('projeto/{projeto}/ambiente/{ambiente}/etapa', 'ProjetoAmbienteEtapaController');
     Route::resource('projeto/{projeto}/ambiente', 'ProjetoAmbienteController');
     Route::resource('projeto', 'ProjetoController');
 

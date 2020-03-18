@@ -30,6 +30,7 @@
 		<ul class="hello-nav-list">
 			<li><a href="{{ url(config('hello.url') . '/projeto') }}">Listar projetos</a></li>
 			<li><a href="{{ url(config('hello.url') . '/projeto/create') }}">Adicionar projeto</a></li>
+			<li><a href="{{ url(config('hello.url') . '/projeto/relatorio/visao-geral') }}">Visão geral</a></li>
 		</ul>
 	</div>
 </div>

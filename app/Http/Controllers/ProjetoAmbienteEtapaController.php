@@ -14,9 +14,10 @@ class ProjetoAmbienteEtapaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        $etapas = $ambiente->etapas()->ordenado()->paginate();
+        return view('projeto.ambiente.etapa.index', compact('projeto', 'ambiente', 'etapas'));
     }
 
     /**
@@ -24,9 +25,9 @@ class ProjetoAmbienteEtapaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        return view('projeto.ambiente.etapa.create', compact('projeto', 'ambiente'));
     }
 
     /**
@@ -35,9 +36,12 @@ class ProjetoAmbienteEtapaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Projeto $projeto, ProjetoAmbiente $ambiente)
     {
-        //
+        $etapa = (new ProjetoAmbienteEtapa)->fill($request->all());
+        $ambiente->etapas()->save($etapa);
+
+        return redirect($etapa->path());
     }
 
     /**
@@ -46,9 +50,9 @@ class ProjetoAmbienteEtapaController extends Controller
      * @param  \App\ProjetoAmbienteEtapa  $projetoAmbienteEtapa
      * @return \Illuminate\Http\Response
      */
-    public function show(ProjetoAmbienteEtapa $projetoAmbienteEtapa)
+    public function show(Projeto $projeto, ProjetoAmbiente $ambiente, ProjetoAmbienteEtapa $etapa)
     {
-        //
+        return view('projeto.ambiente.etapa.show', compact('projeto', 'ambiente', 'etapa'));
     }
 
     /**
@@ -57,9 +61,9 @@ class ProjetoAmbienteEtapaController extends Controller
      * @param  \App\ProjetoAmbienteEtapa  $projetoAmbienteEtapa
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProjetoAmbienteEtapa $projetoAmbienteEtapa)
+    public function edit(Projeto $projeto, ProjetoAmbiente $ambiente, ProjetoAmbienteEtapa $etapa)
     {
-        //
+        return view('projeto.ambiente.etapa.edit', compact('projeto', 'ambiente', 'etapa'));
     }
 
     /**
@@ -69,9 +73,12 @@ class ProjetoAmbienteEtapaController extends Controller
      * @param  \App\ProjetoAmbienteEtapa  $projetoAmbienteEtapa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProjetoAmbienteEtapa $projetoAmbienteEtapa)
+    public function update(Request $request, Projeto $projeto, ProjetoAmbiente $ambiente, ProjetoAmbienteEtapa $etapa)
     {
-        //
+        $etapa->fill($request->all());
+        $etapa->update();
+
+        return redirect($etapa->path());
     }
 
     /**
@@ -80,9 +87,10 @@ class ProjetoAmbienteEtapaController extends Controller
      * @param  \App\ProjetoAmbienteEtapa  $projetoAmbienteEtapa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProjetoAmbienteEtapa $projetoAmbienteEtapa)
+    public function destroy(Projeto $projeto, ProjetoAmbiente $ambiente, ProjetoAmbienteEtapa $etapa)
     {
-        //
+        $etapa->delete();
+        return back();
     }
 
     public function iniciar(Request $request, Projeto $projeto, ProjetoAmbiente $ambiente, ProjetoAmbienteEtapa $etapa)
@@ -93,7 +101,7 @@ class ProjetoAmbienteEtapaController extends Controller
             'inicio_em' => 'required|date',     
         ]);
 
-        $etapa->iniciar($request->iniciar_em);
+        $etapa->iniciar($request->inicio_em);
 
         request()->session()->flash('flash_success', 'Etapa ' . $etapa->nome . ' iniciada com sucesso!');
         return back();
@@ -107,7 +115,7 @@ class ProjetoAmbienteEtapaController extends Controller
             'termino_em' => 'required|date', 
         ]);
 
-        $etapa->encerrar($request->encerrar_em);
+        $etapa->encerrar($request->termino_em);
 
         request()->session()->flash('flash_success', 'Etapa ' . $etapa->nome . ' encerrada com sucesso!');
         return back();

@@ -24,6 +24,8 @@
                 @if($etapas->count())
                     <div class="row">
                         <div class="col-lg-12">
+                            <a href="{{ url($ambiente->path() . '/etapa') }}" class="btn btn-primary btn-sm">Gerenciar etapas</a>
+                            <hr>
                             <div class="table-responsive">
                                 <table class="table hello-table hello-table-no-wrap mb-0">
                                     <thead>
@@ -39,14 +41,14 @@
                                     <tbody>
                                         @foreach($etapas as $indice => $etapa)
                                             <tr>
-                                                <td><a href="#"><strong>{{ $etapa->nome }}</strong></a></td>
+                                                <td><a href="{{ url($etapa->path()) }}"><strong>{{ $etapa->nome }}</strong></a></td>
                                                 <td>{!! ! empty($etapa->inicio_em) ? $etapa->inicio_em->format('d/m/Y') : '<span class="text-muted">Não informado</span>' !!}</td>
                                                 <td>{!! ! empty($etapa->termino_em) ? $etapa->termino_em->format('d/m/Y') : '<span class="text-muted">Não informado</span>' !!}</td>
-                                                <td>{{ $etapa->concluida() ? 'Concluído' : 'Em processo' }}</td>
+                                                <td>{!! $etapa->concluida() ? 'Concluído' : 'Em processo' !!}</td>
                                                 <td>{{ ! empty($etapa->responsavel) ? $etapa->responsavel->nome : 'Não atrelado' }}</td>
                                                 <td class="hello-table-action">
                                                     {!! Form::open(['url' => $etapa->path(), 'method' => 'delete']) !!}
-                                                        @if ( isset($etapas[$indice - 1]) and ! $etapas[$indice]->concluida() and $etapas[$indice -1]->concluida())
+                                                        @if ((isset($etapas[$indice - 1]) and ! $etapas[$indice]->concluida() and $etapas[$indice -1]->concluida()) or ($etapa->sequencia == 1 and empty($etapa->termino_em)))
                                                             <a class="btn btn-sm btn-link" data-toggle="modal" data-target="#m-inicio" title="Iniciar" data-url="{{ url($etapa->path() . '/iniciar') }}" data-etapa="{{ $etapa->nome }}" href="#"><i class="far fa-play-circle fa-fw"></i></a>
                                                             <a class="btn btn-sm btn-link" data-toggle="modal" data-target="#m-termino" title="Encerrar" data-url="{{ url($etapa->path() . '/encerrar') }}" data-etapa="{{ $etapa->nome }}" href="#"><i class="far fa-check-circle fa-fw"></i></a>
                                                         @endif
@@ -56,6 +58,21 @@
                                                     {!! Form::close() !!}
                                                 </td>
                                             </tr>
+                                            @if ($etapa->itens)
+                                                @foreach($etapa->itens as $item)
+                                                    <tr>
+                                                        <td colspan="3">{{ $item->titulo }}</td>
+                                                        <td colspan="2">{!! $item->concluido() ? $item->concluido_em->format('d/m/Y') . '<br><small class="text-muted">' . $item->concluido_em->diffForHumans() . '</small>' : '<span class="text-muted">Não concluído</span>' !!}</td>
+                                                        <td class="hello-table-action">
+                                                            @if ($item->concluido())
+                                                                <a class="btn btn-sm btn-link" title="Desconcluir" href="{{ url($item->path() . '/desconcluir') }}"><i class="far fa-times-circle fa-fw"></i></a>
+                                                            @else
+                                                                <a class="btn btn-sm btn-link" title="Concluir" href="{{ url($item->path() . '/concluir') }}"><i class="far fa-check-circle fa-fw"></i></a>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>

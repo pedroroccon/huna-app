@@ -29,21 +29,26 @@ class ProjetoAmbienteEtapa extends Model
         return $this->belongsTo(ProjetoAmbiente::class, 'projeto_ambiente_id');
     }
 
+    public function itens()
+    {
+        return $this->hasMany(ProjetoAmbienteEtapaItem::class);
+    }
+
     public function path()
     {
         return $this->ambiente->path() . '/etapa/' . $this->id;
     }
 
-    public function iniciar($inicio_em = null)
+    public function iniciar($inicio_em)
     {
-        $etapa->inicio_em = $request->inicio_em;
-        $etapa->update();
+        $this->inicio_em = $inicio_em ?? now();
+        $this->update();
     }
 
-    public function encerrar($termino_em = null)
+    public function encerrar($termino_em)
     {
-        $etapa->termino_em = $request->termino_em;
-        $etapa->update();
+        $this->termino_em = $termino_em ?? now();
+        $this->update();
     }
 
     public function concluida()
